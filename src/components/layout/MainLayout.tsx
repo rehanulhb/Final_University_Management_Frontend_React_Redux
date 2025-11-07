@@ -1,22 +1,39 @@
-import { Layout, Menu } from "antd";
+import { Layout, Menu, type MenuProps } from "antd";
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { createElement } from "react";
+import { Children, createElement } from "react";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-  (icon, index) => ({
-    key: String(index + 1),
-    icon: createElement(icon),
-    label: `nav ${index + 1}`,
-  }),
-);
+const items: MenuProps['items'] = [
+  {
+    key: '1',
+    label: 'Dashboard',
+  },
+  {
+    key: '2',
+    label: 'Profile',
+  },
+  {
+    key: '3',
+    label: 'User Management',
+    children: [
+      {
+        key: '11',
+        label: 'Create Admin',
+      },
+      {
+        key: '21',
+        label: 'Create Student',
+      },
+    ],
+  },
+];
 
 
 
 const MainLayout = () =>{
     return (
-        <Layout>
+        <Layout style={{height:'100vh'}}>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
@@ -27,7 +44,9 @@ const MainLayout = () =>{
           console.log(collapsed, type);
         }}
       >
-        <div className="demo-logo-vertical" />
+        <div style={{color:'white',  display:'flex', justifyContent: 'content', justifyItems: 'center'}}>
+          <h1 style={{height: '100%'}}>University Frontend</h1>
+        </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
       </Sider>
       <Layout>
