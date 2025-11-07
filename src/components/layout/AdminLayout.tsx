@@ -1,9 +1,12 @@
-const AdminLayout = () =>{
-    return (
-        <div>
-            <h1>This is AdminLayout Component</h1>
-        </div>
-    )
-}
+import { Outlet } from 'react-router-dom';
 
-export default AdminLayout
+const AdminLayout = () => {
+  return (
+    <div>
+      <h1>This is Navbar</h1>
+      <Outlet></Outlet>
+    </div>
+  );
+};
+
+export default AdminLayout;
