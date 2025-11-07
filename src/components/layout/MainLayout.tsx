@@ -1,6 +1,6 @@
 import { Layout, Menu, type MenuProps } from "antd";
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Children, createElement } from "react";
+// import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+// import { Children, createElement } from "react";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -44,8 +44,8 @@ const MainLayout = () =>{
           console.log(collapsed, type);
         }}
       >
-        <div style={{color:'white',  display:'flex', justifyContent: 'content', justifyItems: 'center'}}>
-          <h1 style={{height: '100%'}}>University Frontend</h1>
+        <div style={{color:'white',  display:'flex', justifyContent: 'content', alignItems: 'center'}}>
+          <h1>Uni Frontend</h1>
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
       </Sider>
