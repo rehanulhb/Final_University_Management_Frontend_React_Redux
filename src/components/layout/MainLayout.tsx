@@ -1,12 +1,10 @@
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
-import { adminPaths } from '../../routes/admin.routes';
-import { sidebarItemsGenerator } from '../../utils/sidebarItemsGenerator';
 import Sidebar from './Sidebar';
 // import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 // import { Children, createElement } from "react";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content } = Layout;
 
 const MainLayout = () => {
   return (
