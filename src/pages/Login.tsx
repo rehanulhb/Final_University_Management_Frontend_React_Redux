@@ -20,6 +20,7 @@ const Login = () => {
   const [login] = useLoginMutation();
 
   const onSubmit = async (data: FieldValues) => {
+    console.log(data);
     const toastId = toast.loading('Logging in');
 
     try {
@@ -27,11 +28,8 @@ const Login = () => {
         id: data.userId,
         password: data.password,
       };
-
       const res = await login(userInfo).unwrap();
-
       const user = verifyToken(res.data.accessToken) as TUser;
-
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success('Logged in', { id: toastId, duration: 2000 });
       navigate(`/${user.role}/dashboard`);
