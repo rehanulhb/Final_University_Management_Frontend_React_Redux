@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Row } from 'antd';
 import { type FieldValues } from 'react-hook-form';
 import { useLoginMutation } from '../redux/features/auth/authApi';
@@ -18,6 +19,11 @@ const Login = () => {
   //     password: 'admin123',
   //   },
   // });
+
+  const defaultValues = {
+    userId: 'A-0001',
+    password: 'admin123',
+  };
 
   const [login] = useLoginMutation();
 
@@ -41,7 +47,7 @@ const Login = () => {
 
   return (
     <Row justify="center" align="middle" style={{ height: '100vh' }}>
-      <UniFrom onSubmit={onSubmit}>
+      <UniFrom onSubmit={onSubmit} defaultValues={defaultValues}>
         <UniInput type="text" name="userId" label="ID:" />
 
         <UniInput type="text" name="password" label="Password" />
