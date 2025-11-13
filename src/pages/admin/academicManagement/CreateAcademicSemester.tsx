@@ -18,11 +18,22 @@ const nameOptions = [
   },
 ];
 
+const currentYear = new Date().getFullYear();
+const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
+  value: String(currentYear + number),
+  label: String(currentYear + number),
+}));
+
+console.log(yearOptions);
+
 const CreateAcademicSemester = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const name = nameOptions[Number(data?.name) - 1]?.label;
+
     const semesterData = {
-      name: 'something',
-      code: 'something',
+      name,
+      code: data.name,
+      year: data.year,
     };
     console.log(semesterData);
   };
@@ -32,6 +43,9 @@ const CreateAcademicSemester = () => {
       <Col span={6}>
         <UniFrom onSubmit={onSubmit}>
           <UniSelect label="Name" name="name" options={nameOptions} />
+          <UniSelect label="Year" name="year" options={yearOptions} />
+          <UniSelect label="Start Month" name="startMonth" options={nameOptions} />
+          <UniSelect label="End Month" name="endMonth" options={nameOptions} />
 
           <Button htmlType="submit">Submit</Button>
         </UniFrom>

@@ -13,7 +13,7 @@ const UniSelect = ({ label, name, options }: TUNISelectProps) => {
       name={name}
       render={({ field }) => (
         <Form.Item label={label}>
-          <Select style={{ width: '100%' }} {...field} options={options} />
+          <Select style={{ width: '100%' }} {...field} options={options} size="large" />
         </Form.Item>
       )}
     />
