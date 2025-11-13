@@ -2,21 +2,10 @@ import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import UniFrom from '../../../components/form/UniFrom';
 import { Button, Col, Flex } from 'antd';
 import UniSelect from '../../../components/form/UniSelect';
-
-const nameOptions = [
-  {
-    value: '01',
-    label: 'Autumn',
-  },
-  {
-    value: '02',
-    label: 'Summer',
-  },
-  {
-    value: '03',
-    label: 'Fall',
-  },
-];
+import { semesterOptions } from '../../../constants/semester';
+import { montOptions } from '../../../constants/global';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { academicSemesterSchema } from '../../../schemas/academicManagement.schema';
 
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
@@ -28,12 +17,14 @@ console.log(yearOptions);
 
 const CreateAcademicSemester = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const name = nameOptions[Number(data?.name) - 1]?.label;
+    const name = semesterOptions[Number(data?.name) - 1]?.label;
 
     const semesterData = {
       name,
       code: data.name,
       year: data.year,
+      startMonth: data.startMonth,
+      endMonth: data.endMonth,
     };
     console.log(semesterData);
   };
@@ -41,11 +32,11 @@ const CreateAcademicSemester = () => {
   return (
     <Flex justify="center" align="center">
       <Col span={6}>
-        <UniFrom onSubmit={onSubmit}>
-          <UniSelect label="Name" name="name" options={nameOptions} />
+        <UniFrom onSubmit={onSubmit} resolver={zodResolver(academicSemesterSchema)}>
+          <UniSelect label="Name" name="name" options={semesterOptions} />
           <UniSelect label="Year" name="year" options={yearOptions} />
-          <UniSelect label="Start Month" name="startMonth" options={nameOptions} />
-          <UniSelect label="End Month" name="endMonth" options={nameOptions} />
+          <UniSelect label="Start Month" name="startMonth" options={montOptions} />
+          <UniSelect label="End Month" name="endMonth" options={montOptions} />
 
           <Button htmlType="submit">Submit</Button>
         </UniFrom>
