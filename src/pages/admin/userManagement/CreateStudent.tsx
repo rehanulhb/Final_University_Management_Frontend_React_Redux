@@ -1,7 +1,7 @@
-import type { FieldValues, SubmitHandler } from 'react-hook-form';
+import { Controller, type FieldValues, type SubmitHandler } from 'react-hook-form';
 import UniFrom from '../../../components/form/UniFrom';
 import UniInput from '../../../components/form/UniInput';
-import { Button, Col, Divider, Row } from 'antd';
+import { Button, Col, Divider, Form, Input, Row } from 'antd';
 import UniSelect from '../../../components/form/UniSelect';
 import { bloodGroupOptions, genderOptions } from '../../../constants/global';
 import UniDatePicker from '../../../components/form/UniDatePicker';
@@ -56,7 +56,7 @@ const studentDefaultValues = {
   },
   gender: 'male',
 
-  email: 'rima20@gmail.com',
+  email: 'rima23@gmail.com',
   contactNo: '+1-555-123-4567',
   emergencyContactNo: '+1-555-987-6543',
   bloodGroup: 'O+',
@@ -87,8 +87,6 @@ const CreateStudent = () => {
   const { data: sData, isLoading: sIsLoading } = useGetAllSemestersQuery(undefined);
   const { data: dData, isLoading: dIsLoading } = useGetAcademicDepartmentsQuery(undefined);
 
-  console.log(sIsLoading);
-
   const semesterOptions = sData?.data?.map((item) => ({
     value: item._id,
     label: `${item.name} ${item.year}`,
@@ -104,11 +102,11 @@ const CreateStudent = () => {
       password: 'student123',
       student: data,
     };
-    console.log(data);
 
     const formData = new FormData();
 
     formData.append('data', JSON.stringify(studentData));
+    formData.append('file', data.image);
 
     addStudent(formData);
 
@@ -139,6 +137,21 @@ const CreateStudent = () => {
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <UniSelect options={bloodGroupOptions} name="bloodGroup" label="Blood Group" />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="image"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Picture">
+                    <Input
+                      type="file"
+                      value={value?.fileName}
+                      {...field}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
+              />
             </Col>
           </Row>
           <Divider>Contact Info</Divider>
