@@ -7,8 +7,18 @@ import type { TStudent } from '../../../types/userManagement.type';
 export type TTableData = Pick<TStudent, 'name' | 'id'>;
 
 const StudentData = () => {
-  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
-  const { data: studentData, isLoading, isFetching } = useGetAllStudentsQuery(params);
+  const [params, setParams] = useState<TQueryParam[]>([]);
+  const [page, setPage] = useState(3);
+  const {
+    data: studentData,
+    isLoading,
+    isFetching,
+  } = useGetAllStudentsQuery([
+    { name: 'limit', value: 3 },
+    { name: 'page', value: page },
+    { name: 'sort', value: 'id' },
+    ...params,
+  ]);
 
   console.log({ isLoading, isFetching });
 

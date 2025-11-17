@@ -50,13 +50,13 @@ const studentDummyData = {
 //! Just for checking
 const studentDefaultValues = {
   name: {
-    firstName: 'Rehanul',
-    middleName: 'Hasan',
-    lastName: 'Bappy',
+    firstName: 'Sakib',
+    middleName: '',
+    lastName: 'Khan',
   },
   gender: 'male',
 
-  email: 'rima25@gmail.com',
+  email: 'sakib@gmail.com',
   contactNo: '+1-555-123-4567',
   emergencyContactNo: '+1-555-987-6543',
   bloodGroup: 'O+',
