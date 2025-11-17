@@ -1,14 +1,14 @@
-import { Button, Space, Table, type TableColumnsType, type TableProps } from 'antd';
+import { Button, Pagination, Space, Table, type TableColumnsType, type TableProps } from 'antd';
 import { useState } from 'react';
 import type { TQueryParam } from '../../../types/global';
 import { useGetAllStudentsQuery } from '../../../redux/features/admin/userManagement.api';
 import type { TStudent } from '../../../types/userManagement.type';
 
-export type TTableData = Pick<TStudent, 'name' | 'id'>;
+export type TTableData = Pick<TStudent, 'fullName' | 'id'>;
 
 const StudentData = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(1);
   const {
     data: studentData,
     isLoading,
@@ -21,6 +21,8 @@ const StudentData = () => {
   ]);
 
   console.log({ isLoading, isFetching });
+
+  const meatData = studentData?.meta;
 
   const tableData = studentData?.data?.map(({ _id, fullName, id }) => ({
     key: _id,
@@ -67,13 +69,21 @@ const StudentData = () => {
   };
 
   return (
-    <Table
-      loading={isFetching}
-      columns={columns}
-      dataSource={tableData}
-      onChange={onChange}
-      showSorterTooltip={{ target: 'sorter-icon' }}
-    />
+    <>
+      <Table
+        loading={isFetching}
+        columns={columns}
+        dataSource={tableData}
+        onChange={onChange}
+        pagination={false}
+      />
+      <Pagination
+        current={page}
+        onChange={(value) => setPage(value)}
+        pageSize={meatData?.limit}
+        total={meatData?.total}
+      />
+    </>
   );
 };
 
