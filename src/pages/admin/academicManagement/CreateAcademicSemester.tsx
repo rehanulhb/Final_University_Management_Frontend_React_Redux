@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
-import UniFrom from '../../../components/form/UniFrom';
+
 import { Button, Col, Flex } from 'antd';
-import UniSelect from '../../../components/form/UniSelect';
+
 import { semesterOptions } from '../../../constants/semester';
-import { montOptions } from '../../../constants/global';
+import { monthOptions } from '../../../constants/global';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import { academicSemesterSchema } from '../../../schemas/academicManagement.schema';
 import { useAddAcademicSemesterMutation } from '../../../redux/features/admin/academicManagement.api';
 import { toast } from 'sonner';
 import type { TResponse } from '../../../types/global';
+import UniSelect from '../../../components/form/UniSelect';
+import UniFrom from '../../../components/form/UniFrom';
+// import { TResponse } from '../../../types/global';
 
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
@@ -21,7 +24,7 @@ const CreateAcademicSemester = () => {
   const [addAcademicSemester] = useAddAcademicSemesterMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const toastId = toast.loading('Creating....');
+    const toastId = toast.loading('Creating...');
 
     const name = semesterOptions[Number(data?.name) - 1]?.label;
 
@@ -39,10 +42,10 @@ const CreateAcademicSemester = () => {
       if (res.error) {
         toast.error(res.error.data.message, { id: toastId });
       } else {
-        toast.success('Semester Created', { id: toastId });
+        toast.success('Semester created', { id: toastId });
       }
     } catch (err) {
-      toast.error('Something went Wrong', { id: toastId });
+      toast.error('Something went wrong', { id: toastId });
     }
   };
 
@@ -52,8 +55,8 @@ const CreateAcademicSemester = () => {
         <UniFrom onSubmit={onSubmit} resolver={zodResolver(academicSemesterSchema)}>
           <UniSelect label="Name" name="name" options={semesterOptions} />
           <UniSelect label="Year" name="year" options={yearOptions} />
-          <UniSelect label="Start Month" name="startMonth" options={montOptions} />
-          <UniSelect label="End Month" name="endMonth" options={montOptions} />
+          <UniSelect label="Start Month" name="startMonth" options={monthOptions} />
+          <UniSelect label="End Month" name="endMonth" options={monthOptions} />
 
           <Button htmlType="submit">Submit</Button>
         </UniFrom>

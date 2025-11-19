@@ -1,12 +1,15 @@
-import type { TSemester } from '../../../types/courseManagement.type';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {} from '../../../types';
+import type { TCourse, TSemester } from '../../../types/courseManagement.type';
 import type { TQueryParam, TResponseRedux } from '../../../types/global';
 import { baseApi } from '../../api/baseApi';
 
-const courseManagmentApi = baseApi.injectEndpoints({
+const courseManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllRegisteredSemesters: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
+
         if (args) {
           args.forEach((item: TQueryParam) => {
             params.append(item.name, item.value as string);
@@ -29,7 +32,7 @@ const courseManagmentApi = baseApi.injectEndpoints({
     }),
     addRegisteredSemester: builder.mutation({
       query: (data) => ({
-        url: '/semester-registration/create-semester-registration',
+        url: '/semester-registrations/create-semester-registration',
         method: 'POST',
         body: data,
       }),
@@ -37,7 +40,7 @@ const courseManagmentApi = baseApi.injectEndpoints({
     }),
     updateRegisteredSemester: builder.mutation({
       query: (args) => ({
-        url: `/semester-registration/${args.id}`,
+        url: `/semester-registrations/${args.id}`,
         method: 'PATCH',
         body: args.data,
       }),
@@ -46,6 +49,7 @@ const courseManagmentApi = baseApi.injectEndpoints({
     getAllCourses: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
+
         if (args) {
           args.forEach((item: TQueryParam) => {
             params.append(item.name, item.value as string);
@@ -59,7 +63,7 @@ const courseManagmentApi = baseApi.injectEndpoints({
         };
       },
       providesTags: ['courses'],
-      transformResponse: (response: TResponseRedux<any>) => {
+      transformResponse: (response: TResponseRedux<TCourse[]>) => {
         return {
           data: response.data,
           meta: response.meta,
@@ -82,6 +86,28 @@ const courseManagmentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['courses'],
     }),
+    getCourseFaculties: builder.query({
+      query: (id) => {
+        return {
+          url: `/courses/${id}/get-faculties`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
+    createOfferedCourse: builder.mutation({
+      query: (data) => ({
+        url: `offered-courses/create-offered-course`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['courses'],
+    }),
   }),
 });
 
@@ -92,4 +118,6 @@ export const {
   useGetAllCoursesQuery,
   useAddCourseMutation,
   useAddFacultiesMutation,
-} = courseManagmentApi;
+  useGetCourseFacultiesQuery,
+  useCreateOfferedCourseMutation,
+} = courseManagementApi;
